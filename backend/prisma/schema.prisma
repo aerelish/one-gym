@@ -39,7 +39,7 @@ model User {
 model MembershipPlan {
   id          Int      @id @default(autoincrement())
   name        String
-  description String
+  description String?
   price       Float
   duration    Int      // duration in days
   createdAt   DateTime @default(now())

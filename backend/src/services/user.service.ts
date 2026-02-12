@@ -2,7 +2,7 @@ import { CreateUserDto, UpdateUserDto } from '#dto/user.dto.js';
 import { prisma, Role, User } from '#lib/prisma.js';
 
 /**
- * create a new user
+ * Create a new user
  * @param data - data for the new user | using CreateUserDto for type safety
  * @returns created User object
  */
@@ -18,7 +18,7 @@ export const createUser = async (data: CreateUserDto): Promise<User> => {
 };
 
 /**
- *
+ * Get all users with their subscriptions and plans
  * @returns array of all users with their subscriptions and plans
  */
 export const getAllUsers = async (): Promise<User[]> => {
@@ -36,7 +36,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 /**
  * Get a user by their ID
  * @param id - userId
- * @returns user object (along with their subscriptions and plans) or null if not found
+ * @returns User object (along with their subscriptions and plans) or null if not found
  */
 export const getUserById = async (id: number): Promise<null | User> => {
 	return prisma.user.findUnique({
@@ -55,7 +55,7 @@ export const getUserById = async (id: number): Promise<null | User> => {
  * TODO - implement this after implementing basic CRUD operations for users. This will be used for login functionality.
  * get a user by their email
  * @param email - user's email
- * @returns user object or null if not found
+ * @returns User object or null if not found
  */
 export const getUserByEmail = async (email: string): Promise<null | User> => {
 	return prisma.user.findUnique({
