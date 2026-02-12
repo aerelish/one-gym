@@ -1,0 +1,10 @@
+# Ignore node_modules | this is already ignored in the root .gitignore, but just to be safe
+node_modules
+
+# IMPORTANT! Keep environment variables out of version control!
+.env
+
+# Ignore Prisma's generated client
+generated/prisma
+# Ignore the SQLite database file
+dev.db
