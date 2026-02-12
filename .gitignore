@@ -16,4 +16,6 @@ yarn-error.log*
 
 # OS / Editor files
 .DS_Store
-# .vscode/ # Uncomment if you want to ignore VSCode settings
+
+# Uncomment/Comment if you want to ignore/unignore VSCode settings
+.vscode/ 
