@@ -6,6 +6,8 @@
 		"dev": "tsx --watch --env-file .env src/server.ts",
 		"start": "node --env-file .env dist/server.js",
 		"type-check": "tsc --noEmit",
+		"prisma:generate": "prisma generate",
+		"prisma:migrate": "prisma migrate dev",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -22,6 +24,7 @@
 		"express": "^5.2.1"
 	},
 	"devDependencies": {
+		"@prisma/adapter-better-sqlite3": "^7.4.0",
 		"@tsconfig/node22": "^22.0.5",
 		"@types/cors": "^2.8.19",
 		"@types/express": "^5.0.6",
