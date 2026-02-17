@@ -12,6 +12,7 @@
 		"prisma:generate": "prisma generate",
 		"prisma:migrate": "prisma migrate dev",
 		"test": "jest",
+		"test:clear": "jest --clearCache",
 		"test:watch": "jest --watch"
 	},
 	"keywords": [],
