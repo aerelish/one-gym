@@ -24,4 +24,10 @@ export default tseslint.config(
 		},
 	},
 	perfectionist.configs['recommended-natural'],
+	{
+		rules: {
+			'perfectionist/sort-objects': 'off',
+			'perfectionist/sort-named-exports': 'off',
+		},
+	},
 );

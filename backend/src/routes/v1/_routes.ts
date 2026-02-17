@@ -4,6 +4,7 @@
 
 import express from 'express';
 
+import authRoutes from './auth/auth.routes.js';
 import membershipPlanRoutes from './membershipPlan.routes.js';
 import subscriptionRoutes from './subscription.routes.js';
 import userRoutes from './user.routes.js';
@@ -11,6 +12,7 @@ import userRoutes from './user.routes.js';
 const router = express.Router();
 
 // add all routes here
+router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/membership-plans', membershipPlanRoutes);
 router.use('/subscriptions', subscriptionRoutes);
