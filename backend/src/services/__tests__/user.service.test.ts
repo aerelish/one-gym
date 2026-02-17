@@ -1,8 +1,23 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { prisma, Role } from '#lib/prisma.js';
-import { createUser, getAllUsers, getUserById, getUserByEmail, updateUserById, deleteUserById } from '../user.service.js';
 
-jest.mock('#lib/prisma.js');
+jest.mock('#lib/prisma', () => ({
+	prisma: {
+		user: {
+			create: jest.fn(),
+			findMany: jest.fn(),
+			findUnique: jest.fn(),
+			update: jest.fn(),
+			delete: jest.fn(),
+		},
+	},
+	Role: {
+		MEMBER: 'MEMBER',
+		ADMIN: 'ADMIN',
+	},
+}));
+
+import { prisma, Role } from '#lib/prisma.js';
+import { createUser, getAllUsers, getUserById, getUserByEmail, updateUserById, deleteUserById } from '#services/user.service.js';
 
 const mockPrisma = prisma as unknown as {
 	user: {

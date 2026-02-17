@@ -6,7 +6,7 @@ const config: Config = {
 	extensionsToTreatAsEsm: ['.ts'], // tell Jest we're using ESM
 	moduleNameMapper: {
 		'^#(.*)\\.js$': '<rootDir>/src/$1.ts',
-		'^#(.*)$': '<rootDir>/src/$1',
+		'^#(.*)$/': '<rootDir>/src/$1',
 	}, // module alias mapping for package.json "imports"
 	preset: 'ts-jest/presets/default-esm',
 	roots: ['<rootDir>/src'], // where tests live
