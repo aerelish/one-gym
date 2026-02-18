@@ -32,7 +32,7 @@ const mockPrisma = prisma as jest.Mocked<typeof prisma>;
 // mock subscription data
 const mockSubscription = {
 	id: 1,
-	userId: 1,
+	userId: '1234567890abcdef',
 	planId: 1,
 	status: SubscriptionStatus.ACTIVE,
 	startDate: new Date('2026-01-01'),
@@ -64,7 +64,7 @@ describe('SubscriptionService', () => {
 			mockPrisma.subscription.create.mockResolvedValue(mockSubscription);
 
 			const result = await createSubscription({
-				userId: 1,
+				userId: '1234567890abcdef',
 				planId: 1,
 				startDate: new Date('2026-01-01'),
 				endDate: new Date('2026-12-31'),
@@ -74,7 +74,7 @@ describe('SubscriptionService', () => {
 			// check that prisma.subscription.create was called with the correct data
 			expect(mockPrisma.subscription.create).toHaveBeenCalledWith({
 				data: {
-					userId: 1,
+					userId: '1234567890abcdef',
 					planId: 1,
 					startDate: new Date('2026-01-01'),
 					endDate: new Date('2026-12-31'),
@@ -91,7 +91,7 @@ describe('SubscriptionService', () => {
 
 			// call createSubscription without status
 			await createSubscription({
-				userId: 1,
+				userId: '1234567890abcdef',
 				planId: 1,
 				startDate: new Date('2026-01-01'),
 				endDate: new Date('2026-12-31'),

@@ -19,7 +19,7 @@ jest.mock('#lib/prisma', () => ({
 const mockPrisma = prisma as jest.Mocked<typeof prisma>;
 
 const mockUser = {
-	id: 1,
+	id: '1234567890abcdef',
 	email: 'test@example.com',
 	name: 'Test User',
 	password: 'hashed_password',

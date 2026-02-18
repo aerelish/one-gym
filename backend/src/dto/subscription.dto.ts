@@ -5,7 +5,7 @@ export interface CreateSubscriptionDto {
 	planId: number;
 	startDate: Date;
 	status?: SubscriptionStatus; // optional, defaults to 'ACTIVE'
-	userId: number;
+	userId: string;
 }
 
 export interface UpdateSubscriptionDto {

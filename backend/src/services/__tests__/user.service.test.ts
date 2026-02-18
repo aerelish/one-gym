@@ -24,7 +24,7 @@ const mockPrisma = prisma as jest.Mocked<typeof prisma>;
 
 // mock user data
 const mockUser = {
-	id: 1,
+	id: '1234567890abcdef',
 	email: 'test@example.com',
 	name: 'Test User',
 	password: 'hashed_password',
@@ -131,7 +131,7 @@ describe('UserService', () => {
 		it('should return user with subscriptions and plans by id', async () => {
 			mockPrisma.user.findUnique.mockResolvedValue(mockUserWithSubscriptions);
 
-			const result = await getUserById(1);
+			const result = await getUserById('1234567890abcdef');
 
 			// check that prisma.user.findUnique was called with the correct id and included subscriptions and plans
 			expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
@@ -142,7 +142,7 @@ describe('UserService', () => {
 						},
 					},
 				},
-				where: { id: 1 },
+				where: { id: '1234567890abcdef' },
 			});
 
 			// check that the result is the mockUserWithSubscriptions
@@ -152,7 +152,7 @@ describe('UserService', () => {
 		it('should return null when user does not exist', async () => {
 			mockPrisma.user.findUnique.mockResolvedValue(null);
 
-			const result = await getUserById(999);
+			const result = await getUserById('nonexistent_id');
 			// check that the result is null when user does not exist
 			expect(result).toBeNull();
 		});
@@ -190,12 +190,12 @@ describe('UserService', () => {
 			mockPrisma.user.update.mockResolvedValue(updatedUser);
 
 			// call updateUserById with new name
-			const result = await updateUserById(1, updatedData);
+			const result = await updateUserById('1234567890abcdef', updatedData);
 
 			// check that prisma.user.update was called with the correct id and data
 			expect(mockPrisma.user.update).toHaveBeenCalledWith({
 				data: updatedData,
-				where: { id: 1 },
+				where: { id: '1234567890abcdef' },
 			});
 
 			// check that the result is the updated user
@@ -209,12 +209,12 @@ describe('UserService', () => {
 			mockPrisma.user.update.mockResolvedValue(updatedUser);
 
 			// call updateUserById with new name and email
-			await updateUserById(1, updateData);
+			await updateUserById('1234567890abcdef', updateData);
 
 			// check that prisma.user.update was called with the correct id and data
 			expect(mockPrisma.user.update).toHaveBeenCalledWith({
 				data: updateData,
-				where: { id: 1 },
+				where: { id: '1234567890abcdef' },
 			});
 		});
 	});
@@ -223,11 +223,11 @@ describe('UserService', () => {
 		it('should delete user by id', async () => {
 			mockPrisma.user.delete.mockResolvedValue(mockUser);
 
-			const result = await deleteUserById(1);
+			const result = await deleteUserById('1234567890abcdef');
 
 			// check that prisma.user.delete was called with the correct id
 			expect(mockPrisma.user.delete).toHaveBeenCalledWith({
-				where: { id: 1 },
+				where: { id: '1234567890abcdef' },
 			});
 
 			// check that the result is the deleted user
