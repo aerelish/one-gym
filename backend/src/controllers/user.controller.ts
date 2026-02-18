@@ -40,7 +40,7 @@ export const getAll = async (_req: Request, res: Response) => {
  */
 export const getById = async (req: Request<{ id: string }>, res: Response) => {
 	try {
-		const id = parseInt(req.params.id, 10);
+		const { id } = req.params;
 		const user = await userService.getUserById(id);
 		if (!user) {
 			return res.status(404).json({ message: 'User not found' });
@@ -59,7 +59,7 @@ export const getById = async (req: Request<{ id: string }>, res: Response) => {
  */
 export const updateById = async (req: Request<{ id: string }, object, UpdateUserDto>, res: Response) => {
 	try {
-		const id = parseInt(req.params.id, 10);
+		const { id } = req.params;
 		const user = await userService.updateUserById(id, req.body);
 		return res.json(user);
 	} catch (error: unknown) {
@@ -75,7 +75,7 @@ export const updateById = async (req: Request<{ id: string }, object, UpdateUser
  */
 export const deleteById = async (req: Request<{ id: string }>, res: Response) => {
 	try {
-		const id = parseInt(req.params.id, 10);
+		const { id } = req.params;
 		const user = await userService.deleteUserById(id);
 		return res.json(user);
 	} catch (error: unknown) {
