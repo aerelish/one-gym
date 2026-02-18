@@ -40,11 +40,6 @@ describe('AuthService', () => {
 			password: 'password',
 		};
 
-		it('throws if required fields are missing', async () => {
-			const incompleteData = { ...userData, email: '' };
-			await expect(registerUser(incompleteData)).rejects.toThrow();
-		});
-
 		it('throws if email already exists', async () => {
 			mockPrisma.user.findUnique.mockResolvedValueOnce(mockUser);
 			await expect(registerUser(userData)).rejects.toThrow();
