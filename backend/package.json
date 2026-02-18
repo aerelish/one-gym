@@ -9,8 +9,8 @@
 		"dev": "tsx --watch --env-file .env src/server.ts",
 		"start": "node --env-file .env dist/server.js",
 		"type-check": "tsc --noEmit",
-		"prisma:generate": "prisma generate",
 		"prisma:migrate": "prisma migrate dev",
+		"prisma:generate": "prisma generate",
 		"test": "jest",
 		"test:clear": "jest --clearCache",
 		"test:watch": "jest --watch"
