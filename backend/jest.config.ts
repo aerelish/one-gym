@@ -11,7 +11,10 @@ const config: Config = {
 	preset: 'ts-jest/presets/default-esm',
 	roots: ['<rootDir>/src'], // where tests live
 	testEnvironment: 'node',
-	testMatch: ['**/__tests__/**/*.test.ts'],
+	testMatch: [
+		'**/__tests__/**/*.test.ts', // unit tests in __tests__ folders
+		'**/tests/**/*.test.ts', // top level tests folders, e.g. for integration tests, e2e, test utils, etc.
+	],
 
 	transform: {
 		'^.+\\.ts$': [
