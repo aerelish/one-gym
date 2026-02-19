@@ -1,5 +1,7 @@
+import MainLayout from '@/components/layout/MainLayout'
+
 function LandingPage() {
-  return null
+  return <MainLayout />
 }
 
 export default LandingPage
