@@ -1,11 +1,20 @@
+
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/auth/useAuth'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useState } from 'react'
 
 function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
+  const [form, setForm] = useState({ email: '', password: '' })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
   return (
     <Card className="w-full max-w-sm border">
       <div className="space-y-6 p-6 sm:p-8">
@@ -16,11 +25,20 @@ function Login() {
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault()
+            login({ email: form.email, password: form.password })
+          }}
+        >
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               type="email"
               placeholder="you@example.com"
               required
@@ -31,6 +49,9 @@ function Login() {
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
+              name='password'
+              value={form.password}
+              onChange={handleChange}
               type="password"
               placeholder="••••••••"
               required
