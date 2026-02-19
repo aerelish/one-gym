@@ -1,5 +1,11 @@
 import { createContext } from 'react';
 
+export type RegisterPayload = {
+	name: string;
+	email: string;
+	password: string;
+};
+
 export type User = {
 	email: string;
 	password: string;
@@ -7,7 +13,7 @@ export type User = {
 
 export type AuthContextType = {
 	user: User | null;
-	register: (name: string, email: string, password: string) => void;
+	register: (payload: RegisterPayload) => void;
 	login: (user: User) => void;
 	logout: () => void;
 };

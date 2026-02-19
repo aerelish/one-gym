@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { AuthContext, type User } from "./auth.context";
+import { AuthContext, type User, type RegisterPayload } from "./auth.context";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const [user,] = useState<User | null>(null);
 
-  function register(name: string, email: string, password: string) {
-    console.log("Registering user:", { name, email, password });
+  function register(payload: RegisterPayload) {
+    console.log("Registering user:", payload);
   }
 
   function login(user: User) {

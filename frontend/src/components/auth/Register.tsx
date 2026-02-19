@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/auth/useAuth'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -6,6 +8,12 @@ import { Label } from '@/components/ui/label'
 
 function Register() {
   const navigate = useNavigate()
+  const { register } = useAuth()
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
   return (
     <Card className="w-full max-w-sm border">
       <div className="space-y-6 p-6 sm:p-8">
@@ -16,12 +24,26 @@ function Register() {
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (form.password !== form.confirmPassword) {
+              // Handle password mismatch error
+              alert("Passwords do not match")
+              return
+            }
+            register({ name: form.name, email: form.email, password: form.password })
+          }}
+        >
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
               placeholder="Your name"
               required
             />
@@ -32,6 +54,9 @@ function Register() {
             <Input
               id="register-email"
               type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               placeholder="you@example.com"
               required
             />
@@ -42,6 +67,9 @@ function Register() {
             <Input
               id="register-password"
               type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
               placeholder="••••••••"
               required
             />
@@ -52,6 +80,9 @@ function Register() {
             <Input
               id="confirm-password"
               type="password"
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
               placeholder="••••••••"
               required
             />
