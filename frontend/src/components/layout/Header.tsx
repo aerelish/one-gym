@@ -6,7 +6,11 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 
-function Header() {
+type HeaderProps = {
+  onSignIn?: () => void
+}
+
+function Header({ onSignIn }: HeaderProps) {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
@@ -24,7 +28,9 @@ function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <Button type="button">Sign In</Button>
+        <Button type="button" onClick={onSignIn}>
+          Sign In
+        </Button>
       </div>
     </header>
   )
