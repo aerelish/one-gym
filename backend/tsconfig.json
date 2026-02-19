@@ -4,6 +4,13 @@
 		"outDir": "./dist",
 		"rootDir": "./",
 		"forceConsistentCasingInFileNames": true
+
+		// baseUrl and paths for module aliasing - this will only run on build with tsc-alias
+		// !uncomment this on build for module aliasing to work, otherwise it will break the build
+		// "baseUrl": ".",
+		// "paths": {
+		// 	"#*": ["src/*"]
+		// }
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["dist"],

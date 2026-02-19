@@ -8,3 +8,6 @@ node_modules
 generated/prisma
 # Ignore the SQLite database file
 dev.db
+
+# TypeScript build output
+/dist
