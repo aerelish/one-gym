@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import {
   NavigationMenu,
@@ -6,11 +7,9 @@ import {
   NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 
-type HeaderProps = {
-  onSignIn?: () => void
-}
+function Header() {
+  const navigate = useNavigate()
 
-function Header({ onSignIn }: HeaderProps) {
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
@@ -28,8 +27,8 @@ function Header({ onSignIn }: HeaderProps) {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <Button type="button" onClick={onSignIn}>
-          Sign In
+        <Button type="button" onClick={() => navigate('/login')}>
+          Log In
         </Button>
       </div>
     </header>

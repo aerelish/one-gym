@@ -1,13 +1,11 @@
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-type LoginProps = {
-  onToggleRegister?: () => void
-}
-
-function Login({ onToggleRegister }: LoginProps) {
+function Login() {
+  const navigate = useNavigate()
   return (
     <Card className="w-full max-w-sm border">
       <div className="space-y-6 p-6 sm:p-8">
@@ -49,8 +47,8 @@ function Login({ onToggleRegister }: LoginProps) {
             Don't have an account?{' '}
             <button
               type="button"
-              onClick={onToggleRegister}
-              className="font-medium text-primary hover:underline"
+              onClick={() => navigate('/register')}
+              className="font-medium text-primary hover:underline cursor-pointer"
             >
               Sign up
             </button>
