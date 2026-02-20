@@ -34,15 +34,10 @@ function Login() {
           onSubmit={async (e) => {
             e.preventDefault()
             setErrorMessage('')
-            login({ email: form.email, password: form.password })
             try {
-              await login({ email: form.email, password: form.password })
+              await login(form)
             } catch (error) {
-              if (error instanceof Error) {
-                setErrorMessage(error.message)
-                return
-              }
-              setErrorMessage('Login Failed')
+              setErrorMessage(error instanceof Error ? error.message : 'Login failed')
             }
           }}
         >
