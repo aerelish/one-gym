@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AuthContext, type User, type RegisterPayload } from "./auth.context";
+import { login as loginService } from "@/services/auth.service";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 
@@ -9,8 +10,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log("Registering user:", payload);
   }
 
-  function login(user: User) {
-    console.log("Logging in user:", user);
+  async function login(user: User) {
+    try {
+      const loggedInUser = await loginService(user.email, user.password);
+      console.log("Logged in user:", loggedInUser);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   }
 
   function logout() {
