@@ -14,7 +14,7 @@ export type User = {
 interface AuthContextType {
 	user: User | null;
 	register: (payload: RegisterPayload) => void;
-	login: (user: User) => void;
+	login: (user: User) => Promise<void>;
 	logout: () => void;
 }
 

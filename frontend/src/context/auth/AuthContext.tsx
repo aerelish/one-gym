@@ -11,12 +11,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function login(user: User) {
-    try {
-      const loggedInUser = await loginService(user.email, user.password);
-      console.log("Logged in user:", loggedInUser);
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
+    const data = await loginService(user.email, user.password);
+    if (data) console.log("Login successful:", data);
   }
 
   function logout() {

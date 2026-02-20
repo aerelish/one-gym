@@ -11,8 +11,12 @@ function Login() {
   const navigate = useNavigate()
   const { login } = useAuth()
   const [form, setForm] = useState({ email: '', password: '' })
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (errorMessage) {
+      setErrorMessage('')
+    }
     setForm({ ...form, [e.target.name]: e.target.value })
   }
   return (
@@ -27,9 +31,19 @@ function Login() {
 
         <form
           className="space-y-4"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault()
+            setErrorMessage('')
             login({ email: form.email, password: form.password })
+            try {
+              await login({ email: form.email, password: form.password })
+            } catch (error) {
+              if (error instanceof Error) {
+                setErrorMessage(error.message)
+                return
+              }
+              setErrorMessage('Login Failed')
+            }
           }}
         >
           <div className="space-y-2">
@@ -61,6 +75,12 @@ function Login() {
           <Button type="submit" className="w-full">
             Sign In
           </Button>
+
+          {errorMessage ? (
+            <p className="text-sm text-center text-destructive" role="alert">
+              {errorMessage}
+            </p>
+          ) : null}
         </form>
 
         <div className="text-center text-sm">
