@@ -11,11 +11,11 @@ export type User = {
 	password: string;
 };
 
-export type AuthContextType = {
+interface AuthContextType {
 	user: User | null;
 	register: (payload: RegisterPayload) => void;
 	login: (user: User) => void;
 	logout: () => void;
-};
+}
 
 export const AuthContext = createContext<AuthContextType | null>(null);
