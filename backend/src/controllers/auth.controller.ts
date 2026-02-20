@@ -25,8 +25,8 @@ export const login = async (req: Request<object, object, { email: string; passwo
 	}
 
 	try {
-		const result = await authService.loginUser(email, password);
-		res.status(200).json(result);
+		const token = await authService.loginUser(email, password);
+		res.status(200).json({ token: token });
 	} catch (error: unknown) {
 		return res.status(400).json({ message: (error as Error).message });
 	}

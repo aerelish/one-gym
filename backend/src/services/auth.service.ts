@@ -3,6 +3,11 @@ import { comparePassword, hashPassword } from '#lib/bcrypt.js';
 import { signToken } from '#lib/jwt.js';
 import { prisma, Role } from '#lib/prisma.js';
 
+/**
+ * register a new user
+ * @param data - user registration data
+ * @returns the created user
+ */
 export const registerUser = async (data: CreateUserDto) => {
 	const { email, name, password, role } = data;
 
@@ -30,6 +35,12 @@ export const registerUser = async (data: CreateUserDto) => {
 	});
 };
 
+/**
+ * login a user
+ * @param email - user's email
+ * @param password - user's password
+ * @returns an object containing the JWT token
+ */
 export const loginUser = async (email: string, password: string) => {
 	const user = await prisma.user.findUnique({ where: { email } });
 
@@ -44,5 +55,5 @@ export const loginUser = async (email: string, password: string) => {
 
 	// generate and return JWT token
 	const token = signToken({ email: user.email });
-	return { token };
+	return token;
 };

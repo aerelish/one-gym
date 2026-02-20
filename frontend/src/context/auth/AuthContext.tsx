@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import type { User } from "@/types/user.types";
 import { AuthContext, type LoginPayload, type RegisterPayload } from "./auth.context";
-import { loginRequest as loginService } from "@/services/auth.service";
+import { registerRequest as registerService, loginRequest as loginService } from "@/services/auth.service";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 
@@ -11,21 +11,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [, setToken] = useState<string | null>(() => {
     return localStorage.getItem(TOKEN_KEY)
   })
-  const [user,] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  function register(payload: RegisterPayload) {
-    console.log("Registering user:", payload);
+  async function register(payload: RegisterPayload) {
+    try {
+      const user = await registerService(payload);
+      setUser(user);
+    } catch (error) {
+      const message = error instanceof AxiosError
+        ? error.response?.data?.message ?? 'Registration Failed'
+        : 'Registration Failed';
+      throw new Error(message);
+    }
   }
 
   async function login(payload: LoginPayload) {
     try {
-      const { token } = await loginService(payload.email, payload.password);
+      const { token } = await loginService(payload);
       setToken(token);
       localStorage.setItem(TOKEN_KEY, token);
     } catch (error) {
       const message = error instanceof AxiosError
-        ? error.response?.data?.message ?? 'Login failed'
-        : 'Login failed';
+        ? error.response?.data?.message ?? 'Login Failed'
+        : 'Login Failed';
       throw new Error(message);
     }
   }

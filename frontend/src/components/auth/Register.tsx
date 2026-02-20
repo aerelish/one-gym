@@ -6,14 +6,39 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+type RegisterForm = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 function Register() {
   const navigate = useNavigate()
   const { register } = useAuth()
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirmPassword: '' })
+  const [form, setForm] = useState<RegisterForm>({ name: '', email: '', password: '', confirmPassword: '' })
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (errorMessage) {
+      setErrorMessage('')
+    }
     setForm({ ...form, [e.target.name]: e.target.value })
   }
+
+  const handleRegister = async (form: RegisterForm) => {
+    if (form.password !== form.confirmPassword) {
+      setErrorMessage('Passwords do not match')
+      return
+    }
+    try {
+      await register({ name: form.name, email: form.email, password: form.password })
+      navigate('/login')
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Registration Failed')
+    }
+  }
+
   return (
     <Card className="w-full max-w-sm border">
       <div className="space-y-6 p-6 sm:p-8">
@@ -28,12 +53,7 @@ function Register() {
           className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault()
-            if (form.password !== form.confirmPassword) {
-              // Handle password mismatch error
-              alert("Passwords do not match")
-              return
-            }
-            register({ name: form.name, email: form.email, password: form.password })
+            handleRegister(form)
           }}
         >
           <div className="space-y-2">
@@ -91,6 +111,8 @@ function Register() {
           <Button type="submit" className="w-full">
             Sign Up
           </Button>
+
+          {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
         </form>
 
         <div className="text-center text-sm">

@@ -7,10 +7,15 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+type LoginForm = {
+  email: string;
+  password: string;
+}
+
 function Login() {
   const navigate = useNavigate()
   const { login } = useAuth()
-  const [form, setForm] = useState({ email: '', password: '' })
+  const [form, setForm] = useState<LoginForm>({ email: '', password: '' })
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +24,16 @@ function Login() {
     }
     setForm({ ...form, [e.target.name]: e.target.value })
   }
+
+  const handleLogin = async (form: LoginForm) => {
+    try {
+      await login(form)
+      navigate('/dashboard')
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Login Failed')
+    }
+  }
+
   return (
     <Card className="w-full max-w-sm border">
       <div className="space-y-6 p-6 sm:p-8">
@@ -34,11 +49,7 @@ function Login() {
           onSubmit={async (e) => {
             e.preventDefault()
             setErrorMessage('')
-            try {
-              await login(form)
-            } catch (error) {
-              setErrorMessage(error instanceof Error ? error.message : 'Login failed')
-            }
+            await handleLogin(form)
           }}
         >
           <div className="space-y-2">
@@ -71,11 +82,7 @@ function Login() {
             Sign In
           </Button>
 
-          {errorMessage ? (
-            <p className="text-sm text-center text-destructive" role="alert">
-              {errorMessage}
-            </p>
-          ) : null}
+          {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
         </form>
 
         <div className="text-center text-sm">
