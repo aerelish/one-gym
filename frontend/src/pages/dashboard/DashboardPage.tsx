@@ -61,12 +61,12 @@ function DashboardPage() {
               <DropdownMenuTrigger asChild>
                 <Button>
                   <Plus className="h-4 w-4" />
-                  Add
+                  Add New...
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-44">
-                <DropdownMenuItem>Add member</DropdownMenuItem>
-                <DropdownMenuItem>Add plan</DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-36">
+                <DropdownMenuItem>Member</DropdownMenuItem>
+                <DropdownMenuItem>Plan</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -74,12 +74,14 @@ function DashboardPage() {
 
         <div className="flex flex-1 flex-col p-4">
           <Routes>
-            <Route path="/" element={<DashboardHomeTab />} />
-            <Route path="/members" element={<MembersTab />} />
-            <Route path="/plans" element={<PlansTab />} />
-            <Route path="/billing" element={<BillingTab />} />
-            <Route path="/settings" element={<SettingsTab />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route index element={<DashboardHomeTab />} />
+            <Route path="members" element={<MembersTab />} />
+            <Route path="plans" element={<PlansTab />} />
+            <Route path="billing" element={<BillingTab />} />
+            <Route path="settings/members" element={<SettingsTab />} />
+            <Route path="settings/plans" element={<SettingsTab />} />
+            <Route path="settings/billing" element={<SettingsTab />} />
+            <Route path="*" element={<Navigate to="." replace />} />
           </Routes>
         </div>
       </SidebarInset>

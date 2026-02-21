@@ -24,7 +24,7 @@ export function NavMain({
     url: string
     icon?: LucideIcon
     isActive?: boolean
-    items?: {
+    dropdown?: {
       title: string
       url: string
     }[]
@@ -32,28 +32,35 @@ export function NavMain({
 }) {
   const location = useLocation()
 
-  const isRouteActive = (url: string, exact = false) => {
+  function isPathActive(pathname: string, target?: string, exact = false) {
+    if (!target) return false
+
     if (exact) {
-      return location.pathname === url
+      return pathname === target
     }
 
-    return location.pathname === url || location.pathname.startsWith(`${url}/`)
+    return pathname === target || pathname.startsWith(`${target}/`)
   }
 
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {items.map((item) => (
-          item.items?.length ? (
+        {items.map((item) => {
+          const requiresExactMatch = item.url === "/dashboard"
+          const isItemActive =
+            isPathActive(location.pathname, item.url, requiresExactMatch) ||
+            (item.dropdown?.some((child) => isPathActive(location.pathname, child.url)) ?? false)
+
+          return item.dropdown?.length ? (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive}
+              defaultOpen={item.isActive || isItemActive}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title} isActive={isRouteActive("/dashboard/settings") || location.pathname === "/dashboard/members" || location.pathname === "/dashboard/plans" || location.pathname === "/dashboard/billing"}>
+                  <SidebarMenuButton tooltip={item.title} isActive={isItemActive}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -61,9 +68,9 @@ export function NavMain({
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items.map((subItem) => (
+                    {item.dropdown.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild isActive={isRouteActive(subItem.url, true)}>
+                        <SidebarMenuSubButton asChild isActive={isPathActive(location.pathname, subItem.url)}>
                           <NavLink to={subItem.url}>
                             <span>{subItem.title}</span>
                           </NavLink>
@@ -76,7 +83,7 @@ export function NavMain({
             </Collapsible>
           ) : (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild tooltip={item.title} isActive={isRouteActive(item.url, item.url === "/dashboard")}>
+              <SidebarMenuButton asChild tooltip={item.title} isActive={isItemActive}>
                 <NavLink to={item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
@@ -84,7 +91,7 @@ export function NavMain({
               </SidebarMenuButton>
             </SidebarMenuItem>
           )
-        ))}
+        })}
       </SidebarMenu>
     </SidebarGroup>
   )

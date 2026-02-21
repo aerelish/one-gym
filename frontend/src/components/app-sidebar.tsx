@@ -60,18 +60,18 @@ const data = {
       title: "Settings",
       url: "/dashboard/settings",
       icon: Settings2,
-      items: [
+      dropdown: [
         {
           title: "Members",
-          url: "/dashboard/members",
+          url: "/dashboard/settings/members",
         },
         {
           title: "Plans",
-          url: "/dashboard/plans",
+          url: "/dashboard/settings/plans",
         },
         {
           title: "Billing",
-          url: "/dashboard/billing",
+          url: "/dashboard/settings/billing",
         },
       ],
     },
