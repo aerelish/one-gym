@@ -8,8 +8,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const TOKEN_KEY = 'token';
 
+  // helper functions to manage token in localStorage with error handling
+  // cross-browser safe and handles cases where localStorage is unavailable (e.g., in private mode)
+  function getStoredToken() {
+    try {
+      return localStorage.getItem(TOKEN_KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  function storeToken(token: string) {
+    try {
+      localStorage.setItem(TOKEN_KEY, token);
+    } catch {
+      return;
+    }
+  }
+
+  function clearStoredToken() {
+    try {
+      localStorage.removeItem(TOKEN_KEY);
+    } catch {
+      return;
+    }
+  }
+
   const [, setToken] = useState<string | null>(() => {
-    return localStorage.getItem(TOKEN_KEY)
+    return getStoredToken();
   })
   const [user, setUser] = useState<User | null>(null);
 
@@ -29,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const { token } = await loginService(payload);
       setToken(token);
-      localStorage.setItem(TOKEN_KEY, token);
+      storeToken(token);
     } catch (error) {
       const message = error instanceof AxiosError
         ? error.response?.data?.message ?? 'Login Failed'
@@ -40,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   function logout() {
     setToken(null);
-    localStorage.removeItem(TOKEN_KEY);
+    clearStoredToken();
   }
 
   return (
