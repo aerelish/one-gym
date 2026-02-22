@@ -23,9 +23,15 @@ export const createUser = async (data: CreateUserDto): Promise<User> => {
  * Get all users with their subscriptions and plans
  * @returns array of all users with their subscriptions and plans
  */
-export const getAllUsers = async (): Promise<User[]> => {
+export const getAllUsers = async (): Promise<Omit<User, 'password'>[]> => {
 	return prisma.user.findMany({
-		include: {
+		select: {
+			id: true,
+			email: true,
+			name: true,
+			role: true,
+			createdAt: true,
+			updatedAt: true,
 			subscriptions: {
 				include: {
 					plan: true,

@@ -16,107 +16,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-type Member = {
-  name: string
-  email: string
-  active: boolean
-  createdDate: string
-}
+import { useUserService, type UsersMapped } from '@/hooks/useUserService'
 
-const members: Member[] = [
-  {
-    name: 'Alex Johnson',
-    email: 'alex.johnson@example.com',
-    active: true,
-    createdDate: '2025-09-03',
-  },
-  {
-    name: 'Sofia Martinez',
-    email: 'sofia.martinez@example.com',
-    active: true,
-    createdDate: '2025-09-11',
-  },
-  {
-    name: 'Daniel Kim',
-    email: 'daniel.kim@example.com',
-    active: false,
-    createdDate: '2025-09-18',
-  },
-  {
-    name: 'Priya Singh',
-    email: 'priya.singh@example.com',
-    active: true,
-    createdDate: '2025-10-02',
-  },
-  {
-    name: 'Liam O\'Connor',
-    email: 'liam.oconnor@example.com',
-    active: true,
-    createdDate: '2025-10-15',
-  },
-  {
-    name: 'Maya Patel',
-    email: 'maya.patel@example.com',
-    active: false,
-    createdDate: '2025-10-23',
-  },
-  {
-    name: 'Noah Brown',
-    email: 'noah.brown@example.com',
-    active: true,
-    createdDate: '2025-11-01',
-  },
-  {
-    name: 'Emma Wilson',
-    email: 'emma.wilson@example.com',
-    active: true,
-    createdDate: '2025-11-12',
-  },
-  {
-    name: 'Ethan Davis',
-    email: 'ethan.davis@example.com',
-    active: false,
-    createdDate: '2025-11-20',
-  },
-  {
-    name: 'Olivia Garcia',
-    email: 'olivia.garcia@example.com',
-    active: true,
-    createdDate: '2025-12-01',
-  },
-  {
-    name: 'James Miller',
-    email: 'james.miller@example.com',
-    active: true,
-    createdDate: '2025-12-14',
-  },
-  {
-    name: 'Ava Thompson',
-    email: 'ava.thompson@example.com',
-    active: false,
-    createdDate: '2025-12-20',
-  },
-  {
-    name: 'Lucas Anderson',
-    email: 'lucas.anderson@example.com',
-    active: true,
-    createdDate: '2026-01-04',
-  },
-  {
-    name: 'Isabella Thomas',
-    email: 'isabella.thomas@example.com',
-    active: true,
-    createdDate: '2026-01-17',
-  },
-  {
-    name: 'Benjamin White',
-    email: 'benjamin.white@example.com',
-    active: false,
-    createdDate: '2026-01-29',
-  },
-]
-
-const columns: ColumnDef<Member>[] = [
+const columns: ColumnDef<UsersMapped>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -131,10 +33,10 @@ const columns: ColumnDef<Member>[] = [
     cell: ({ row }) => (row.original.active ? 'Yes' : 'No'),
   },
   {
-    accessorKey: 'createdDate',
+    accessorKey: 'createdAt',
     header: 'Join Date',
     cell: ({ row }) =>
-      new Date(row.original.createdDate).toLocaleDateString('en-US', {
+      new Date(row.original.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: '2-digit',
@@ -143,8 +45,11 @@ const columns: ColumnDef<Member>[] = [
 ]
 
 function MembersTab() {
+
+  const { usersMapped } = useUserService()
+
   const table = useReactTable({
-    data: members,
+    data: usersMapped,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -160,7 +65,7 @@ function MembersTab() {
       <div>
         <h2 className="text-xl font-semibold">Members</h2>
         <p className="text-muted-foreground text-sm">
-          Members list with dummy data.
+          Members list with data from the user service.
         </p>
       </div>
 

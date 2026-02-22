@@ -37,7 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [, setToken] = useState<string | null>(() => {
     return getStoredToken();
   })
-  const [user, setUser] = useState<User | null>(null);
 
   async function register(payload: RegisterPayload) {
     try {
@@ -71,7 +70,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user,
       register,
       login,
       logout

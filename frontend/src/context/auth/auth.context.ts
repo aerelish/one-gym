@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import type { User } from '@/types/user.types';
 
 export type RegisterPayload = {
 	name: string;
@@ -14,7 +13,6 @@ export type LoginPayload = {
 };
 
 interface AuthContextType {
-	user: User | null;
 	register: (payload: RegisterPayload) => void;
 	login: (payload: LoginPayload) => Promise<void>;
 	logout: () => void;
