@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AxiosError } from "axios";
-import type { User } from "@/types/user.types";
 import { AuthContext, type LoginPayload, type RegisterPayload } from "./auth.context";
 import { registerRequest as registerService, loginRequest as loginService } from "@/services/auth.service";
 
@@ -40,8 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function register(payload: RegisterPayload) {
     try {
-      const user = await registerService(payload);
-      setUser(user);
+      await registerService(payload);
     } catch (error) {
       const message = error instanceof AxiosError
         ? error.response?.data?.message ?? 'Registration Failed'

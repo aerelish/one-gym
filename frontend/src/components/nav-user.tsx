@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router"
+
 import {
   BadgeCheck,
   Bell,
@@ -26,6 +28,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+import { useAuth } from "@/context/auth/useAuth"
+
 export function NavUser({
   user,
 }: {
@@ -35,7 +39,15 @@ export function NavUser({
     avatar: string
   }
 }) {
+
+  const navigate = useNavigate()
+  const { logout } = useAuth()
   const { isMobile } = useSidebar()
+
+  const handleLogout = () => {
+    logout()
+    navigate("/login")
+  }
 
   return (
     <SidebarMenu>
@@ -87,7 +99,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
