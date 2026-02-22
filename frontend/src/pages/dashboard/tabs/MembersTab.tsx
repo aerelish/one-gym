@@ -5,6 +5,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useMemo } from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -48,9 +49,12 @@ function MembersTab() {
 
   const { usersMapped } = useUserService()
 
+  const data = useMemo(() => usersMapped, [usersMapped]);
+  const cols = useMemo(() => columns, []);
+
   const table = useReactTable({
-    data: usersMapped,
-    columns,
+    data,
+    columns: cols,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { fetchUsers as fetchUsersService } from '@/services/user.service';
 import type { User } from '@/types/user.types';
 
@@ -96,12 +96,16 @@ export const useUserService = (): UseUserServiceReturn => {
 		fetchAllUsers();
 	}, [fetchAllUsers]);
 
-	const usersMapped = users.map((u) => ({
-		name: u.name,
-		email: u.email,
-		active: !!u.subscriptions,
-		createdAt: u.createdAt,
-	}));
+	const usersMapped = useMemo(
+		() =>
+			users.map((u) => ({
+				name: u.name,
+				email: u.email,
+				active: !!u.subscriptions,
+				createdAt: u.createdAt,
+			})),
+		[users],
+	);
 
 	return {
 		users,
